@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.xmader.aria_ng_gui_android" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>AriaNgGUI</name>
+    <description>
+        一个 Aria2 图形界面客户端
+    </description>
+    <author href="https://github.com/Xmader">
+        Xmader
+    </author>
+    <content src="index.html" />
+    <icon src="icon.png" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="org.apache.cordova.shell-exec" spec="https://github.com/petervojtek/cordova-plugin-shell-exec.git" />
+</widget>

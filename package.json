@@ -1,0 +1,21 @@
+{
+    "name": "com.xmader.aria_ng_gui_android",
+    "displayName": "AriaNgGUI",
+    "version": "1.0.0",
+    "description": "一个 Aria2 图形界面客户端",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Xmader/aria-ng-gui-android"
+    },
+    "author": "Xmader",
+    "license": "MIT",
+    "dependencies": {
+        "cordova-android": "^7.1.1",
+        "cordova-plugin-shell-exec": "git+https://github.com/petervojtek/cordova-plugin-shell-exec.git"
+    },
+    "cordova": {
+        "plugins": {
+            "org.apache.cordova.shell-exec": {}
+        }
+    }
+}
