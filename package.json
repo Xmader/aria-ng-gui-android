@@ -2,7 +2,7 @@
     "name": "com.xmader.aria_ng_gui_android",
     "displayName": "AriaNgGUI",
     "version": "1.0.0",
-    "description": "一个 Aria2 图形界面客户端",
+    "description": "一个 Aria2 图形界面跨平台客户端 (此为Android版)",
     "repository": {
         "type": "git",
         "url": "https://github.com/Xmader/aria-ng-gui-android"
