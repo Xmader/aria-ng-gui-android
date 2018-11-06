@@ -11,11 +11,13 @@
     "license": "MIT",
     "dependencies": {
         "cordova-android": "^7.1.1",
+        "cordova-plugin-file": "6.0.1",
         "cordova-plugin-shell-exec": "git+https://github.com/petervojtek/cordova-plugin-shell-exec.git"
     },
     "cordova": {
         "plugins": {
-            "org.apache.cordova.shell-exec": {}
+            "org.apache.cordova.shell-exec": {},
+            "cordova-plugin-file": {}
         }
     }
 }
