@@ -7,6 +7,6 @@
 
 cordova prepare android
 
-# 将'<script src="cordova.js"></script><script src="main.js"></script>'放入index.html中
+# 将'<script src="cordova.js"></script><script src="js/babel-polyfill.min.js"></script><script src="main.js"></script>'放入index.html中
 
 cordova build android

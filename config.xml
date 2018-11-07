@@ -12,6 +12,8 @@
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <allow-intent href="ws://*/*" />
+    <allow-intent href="wss://*/*" />
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
