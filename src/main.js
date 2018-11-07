@@ -31,12 +31,28 @@ const shellExecPromise = (cmd) => {
     })
 }
 
-const copyFilePromise = () => {
+/**
+ * 复制文件
+ * @param {string} srcPath 源文件路径
+ * @param {string} destDir 目标目录
+ * @param {string=} destFileName 目标文件名 (如果留空, 则不改变文件名)
+ * @returns {Promise<Entry>}
+ */
+const copyFilePromise = (srcPath, destDir, destFileName = null) => {
+    return new Promise((resolve, reject) => {
+        const successCallback = (entry) => resolve(entry)
+        const errorCallback = (e) => reject(e)
 
+        window.resolveLocalFileSystemURL(srcPath, function (fileEntry) {
+            window.resolveLocalFileSystemURL(destDir, function (dirEntry) {
+                fileEntry.copyTo(dirEntry, destFileName || fileEntry.name, successCallback, errorCallback)
+            })
+        }, errorCallback)
+    })
 }
 
 
-document.addEventListener('deviceready', function () {
+document.addEventListener("deviceready", async function () {
     const aria2FileURL = cordova.file.applicationDirectory + "www/aria2/android/aria2c"
     const aria2ConfFileURL = cordova.file.applicationDirectory + "www/aria2/aria2.conf"
     const downloadDir = "/storage/emulated/0/Download/"
@@ -75,20 +91,11 @@ document.addEventListener('deviceready', function () {
         }
 
     }
-    const errorCallback = function (e) { console.error(e) }
 
     // 复制aria2.conf
-    window.resolveLocalFileSystemURL(aria2ConfFileURL, function (fileEntry) {
-        window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dirEntry) {
-            fileEntry.copyTo(dirEntry, fileEntry.name, function () { }, errorCallback);
-        })
-    }, errorCallback)
+    await copyFilePromise(aria2ConfFileURL, cordova.file.dataDirectory)
 
     // 复制aria2c
-    window.resolveLocalFileSystemURL(aria2FileURL, function (fileEntry) {
-        window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (dirEntry) {
-            fileEntry.copyTo(dirEntry, fileEntry.name, successCallback, errorCallback);
-        })
-    }, errorCallback)
-
-}, false);
+    const copiedFileEntry = await copyFilePromise(aria2FileURL, cordova.file.dataDirectory)
+    successCallback(copiedFileEntry)
+}, false)
