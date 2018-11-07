@@ -52,6 +52,7 @@ const copyFilePromise = (srcPath, destDir, destFileName = null) => {
 }
 
 
+// 等待 Cordova 完全加载
 document.addEventListener("deviceready", async function () {
     const appDir = top.cordova.file.applicationDirectory
     const dataDir = top.cordova.file.dataDirectory
@@ -60,45 +61,47 @@ document.addEventListener("deviceready", async function () {
     const aria2ConfFileURL = appDir + "www/aria2/aria2.conf"
     const downloadDir = "/storage/emulated/0/Download/"
 
-    const successCallback = async function (copiedFileEntry) {
-        const copiedAria2FileURL = copiedFileEntry.nativeURL.replace("file://", "")
-        const copiedAria2ConfFileURL = copiedAria2FileURL.replace(/\/aria2c$/, "/aria2.conf")
-
-        await shellExecPromise(["touch", downloadDir + "aria2.session"])
-        await shellExecPromise(["chmod", "0777", copiedAria2FileURL])
-
-        let n = 0
-
-        // 在aria2c异常关闭后自动重启aria2c
-        while (true) {
-            try {
-                const res = await shellExecPromise([copiedAria2FileURL, "--conf-path=" + copiedAria2ConfFileURL])
-                console.log(res.output)
-
-                // 被手动关闭时取消自动重启aria2c
-                if (res.output.includes("second(s) has passed. Stopping application.")) {
-                    break;
-                }
-            } catch (res) {
-                console.log(res.output)
-
-                // 端口被占用达到一定次数后时取消自动重启aria2c
-                if (res.output.includes("Failed to bind a socket, cause: Address already in use")) {
-                    if (n > 5) {
-                        break;
-                    } else {
-                        n++
-                    }
-                }
-            }
-        }
-
-    }
-
     // 复制aria2.conf
     await copyFilePromise(aria2ConfFileURL, dataDir)
 
     // 复制aria2c
     const copiedFileEntry = await copyFilePromise(aria2FileURL, dataDir)
-    successCallback(copiedFileEntry)
+
+    // 获取复制到的文件路径
+    const copiedAria2FileURL = copiedFileEntry.nativeURL.replace("file://", "")
+    const copiedAria2ConfFileURL = copiedAria2FileURL.replace(/\/aria2c$/, "/aria2.conf")
+
+    // 运行aria2c前的准备工作
+    // 1. 创建aria2.session会话文件
+    await shellExecPromise(["touch", downloadDir + "aria2.session"])
+    // 2. 让aria2c可执行文件有运行权限
+    await shellExecPromise(["chmod", "0777", copiedAria2FileURL])
+
+    // 创建因为端口被占用而运行失败的次数的计数器
+    let n = 0
+
+    // 在aria2c异常关闭后自动重启aria2c
+    while (true) {
+        try {
+            // 运行aria2c
+            const res = await shellExecPromise([copiedAria2FileURL, "--conf-path=" + copiedAria2ConfFileURL])
+            console.log(res.output)
+
+            // 被手动关闭时取消自动重启aria2c
+            if (res.output.includes("second(s) has passed. Stopping application.")) {
+                break;
+            }
+        } catch (res) {
+            console.log(res.output)
+
+            // 端口被占用达到一定次数后时取消自动重启aria2c
+            if (res.output.includes("Failed to bind a socket, cause: Address already in use")) {
+                if (n > 5) {
+                    break;
+                } else {
+                    n++
+                }
+            }
+        }
+    }
 }, false)
