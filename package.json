@@ -22,7 +22,10 @@
     "scripts": {
         "build": "babel src/main.js -o www/main.js --source-maps inline",
         "watch": "npm run build -- --watch",
-        "buildApk": "cordova build android"
+        "buildApk": "cordova build android",
+        "version": "node tools/run_after_bump_the_version.js",
+        "bump-version:patch": "npm --no-git-tag-version version patch",
+        "bump-version:minor": "npm --no-git-tag-version version minor"
     },
     "cordova": {
         "plugins": {
