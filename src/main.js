@@ -53,8 +53,11 @@ const copyFilePromise = (srcPath, destDir, destFileName = null) => {
 
 
 document.addEventListener("deviceready", async function () {
-    const aria2FileURL = cordova.file.applicationDirectory + "www/aria2/android/aria2c"
-    const aria2ConfFileURL = cordova.file.applicationDirectory + "www/aria2/aria2.conf"
+    const appDir = top.cordova.file.applicationDirectory
+    const dataDir = top.cordova.file.dataDirectory
+
+    const aria2FileURL = appDir + "www/aria2/android/aria2c"
+    const aria2ConfFileURL = appDir + "www/aria2/aria2.conf"
     const downloadDir = "/storage/emulated/0/Download/"
 
     const successCallback = async function (copiedFileEntry) {
@@ -93,9 +96,9 @@ document.addEventListener("deviceready", async function () {
     }
 
     // 复制aria2.conf
-    await copyFilePromise(aria2ConfFileURL, cordova.file.dataDirectory)
+    await copyFilePromise(aria2ConfFileURL, dataDir)
 
     // 复制aria2c
-    const copiedFileEntry = await copyFilePromise(aria2FileURL, cordova.file.dataDirectory)
+    const copiedFileEntry = await copyFilePromise(aria2FileURL, dataDir)
     successCallback(copiedFileEntry)
 }, false)
