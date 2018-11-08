@@ -50,7 +50,5 @@
 
 [点我查看](img/)
 
-![](img/Screenshot_0.png)
-![](img/Screenshot_3.png)
-![](img/Screenshot_10.png)
-![](img/Screenshot_20.png)
+![](img/Screenshot_merged.png)
+
