@@ -22,6 +22,13 @@
 
 ## [查看 Windows、 Linux 和 MacOS 版](https://github.com/Xmader/aria-ng-gui)
 
+## 屏幕截图 | Screenshots
+
+![](img/Screenshot_0.png)
+![](img/Screenshot_3.png)
+![](img/Screenshot_10.png)
+![](img/Screenshot_20.png)
+
 ---
 
 # AriaNg GUI for Android
