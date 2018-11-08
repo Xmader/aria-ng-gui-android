@@ -1,12 +1,12 @@
 /**
- * AriaNgGUI for Android
+ * AriaNg GUI for Android
  * @author Xmader
  * @copyright Copyright (c) 2018 Xmader. All Rights Reserved.
  * @license MIT
  */
 
 // 输出版权信息
-console.info(`AriaNgGUI for Android
+console.info(`AriaNg GUI for Android
 
 Copyright (c) 2018 Xmader
 Released under the MIT license
@@ -33,6 +33,7 @@ const shellExecPromise = (cmd) => {
 
 /**
  * 复制文件
+ * 如果文件已存在, 则自动覆盖
  * @param {string} srcPath 源文件路径
  * @param {string} destDir 目标目录
  * @param {string=} destFileName 目标文件名 (如果留空, 则不改变文件名)
@@ -51,6 +52,42 @@ const copyFilePromise = (srcPath, destDir, destFileName = null) => {
     })
 }
 
+/**
+ * 判断文件或目录是否存在
+ * @param {string} filePath
+ * @returns {Promise<boolean>}
+ */
+const fileOrDirExistsPromise = (filePath) => {
+    return new Promise((resolve) => {
+        const successCallback = () => resolve(true)
+        const errorCallback = (e) => {
+            if (e.code == 1) { // 文件或目录不存在 FileError.NOT_FOUND_ERR
+                resolve(false)
+            } else { // 其它错误
+                resolve(true)
+            }
+        }
+
+        window.resolveLocalFileSystemURL(filePath, successCallback, errorCallback)
+    })
+}
+
+/**
+ * 从一个文件路径获取文件名
+ * @param {string} filePath 
+ */
+const getFileName = (filePath) => {
+    return filePath.split("/").pop()
+}
+
+/**
+ * 把全部给定的路径片段连接到一起
+ * @param {...string} paths 
+ */
+const joinPath = (...paths) => {
+    return paths.join("/").replace(/([^:])\/{3,}|([^/:])\/{2}/g, "$1$2/")
+}
+
 
 // 等待 Cordova 完全加载
 document.addEventListener("deviceready", async function () {
@@ -61,8 +98,21 @@ document.addEventListener("deviceready", async function () {
     const aria2ConfFileURL = appDir + "www/aria2/aria2.conf"
     const downloadDir = "/storage/emulated/0/Download/"
 
-    // 复制aria2.conf
-    await copyFilePromise(aria2ConfFileURL, dataDir)
+    // 显示 AriaNg GUI for Android 的版本号
+    const appVersion = await top.cordova.getAppVersion.getVersionNumber()
+    const logoDiv = document.getElementById("aria-ng-logo")
+    logoDiv.title = `AriaNg GUI for Android v${appVersion} | ${logoDiv.title}`
+
+    // const savedAppVersion = localStorage.getItem("appVersion")
+    // console.log(savedAppVersion)
+    // if (appVersion != savedAppVersion || !(await fileOrDirExistsPromise(dataDir + "aria2c"))) {
+    //     top.localStorage.setItem("appVersion", appVersion)
+    // }
+
+    // 仅当aria2.conf文件不存在时复制aria2.conf, 防止配置文件被覆盖
+    if (!await fileOrDirExistsPromise(dataDir + "aria2.conf")) {
+        await copyFilePromise(aria2ConfFileURL, dataDir)
+    }
 
     // 复制aria2c
     const copiedFileEntry = await copyFilePromise(aria2FileURL, dataDir)
