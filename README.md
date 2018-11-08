@@ -22,12 +22,6 @@
 
 ## [查看 Windows、 Linux 和 MacOS 版](https://github.com/Xmader/aria-ng-gui)
 
-## 屏幕截图 | Screenshots
-
-[点我查看](img/)
-
-![](img/Screenshot_merged.png)
-
 ---
 
 # AriaNg GUI for Android
@@ -49,3 +43,14 @@
 ## [Download](https://github.com/Xmader/aria-ng-gui-android/releases/latest)
 
 ## [View Aria2 GUI for Windows & Linux & MacOS](https://github.com/Xmader/aria-ng-gui)
+
+---
+
+## 屏幕截图 | Screenshots
+
+[点我查看](img/)
+
+![](img/Screenshot_0.png)
+![](img/Screenshot_3.png)
+![](img/Screenshot_10.png)
+![](img/Screenshot_20.png)
