@@ -25,4 +25,5 @@
     <plugin name="org.apache.cordova.shell-exec" spec="https://github.com/petervojtek/cordova-plugin-shell-exec.git" />
     <plugin name="cordova-plugin-file" spec="6.0.1" />
     <plugin name="cordova-plugin-app-version" spec="^0.1.9" />
+    <plugin name="cordova-plugin-android-permissions" spec="1.0.0" />
 </widget>

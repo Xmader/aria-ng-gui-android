@@ -88,6 +88,29 @@ const joinPath = (...paths) => {
     return paths.join("/").replace(/([^:])\/{3,}|([^/:])\/{2}/g, "$1$2/")
 }
 
+/**
+ * 手动请求 android.permission.WRITE_EXTERNAL_STORAGE 权限 
+ * @returns {Promise<boolean>}
+ */
+const requestWriteExternalStoragePermission = async () => {
+    
+    // @ts-ignore
+    const permissions = window.cordova.plugins.permissions
+    const name = permissions.WRITE_EXTERNAL_STORAGE
+
+    return new Promise((resolve, reject) => {
+        permissions.requestPermission(name, (result) => {
+            if (result && result.hasPermission) {
+                resolve(true)
+            } else {
+                reject(false)
+            }
+        }, (err) => {
+            reject(err)
+        })
+    })
+
+}
 
 // 等待 Cordova 完全加载
 document.addEventListener("deviceready", async function () {
@@ -108,6 +131,9 @@ document.addEventListener("deviceready", async function () {
     // if (appVersion != savedAppVersion || !(await fileOrDirExistsPromise(dataDir + "aria2c"))) {
     //     top.localStorage.setItem("appVersion", appVersion)
     // }
+
+    // 手动请求 存储空间读写 的权限
+    await requestWriteExternalStoragePermission()
 
     // 仅当aria2.conf文件不存在时复制aria2.conf, 防止配置文件被覆盖
     if (!await fileOrDirExistsPromise(dataDir + "aria2.conf")) {
