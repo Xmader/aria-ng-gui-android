@@ -1,7 +1,7 @@
 {
     "name": "com.xmader.aria_ng_gui_android",
     "displayName": "AriaNg GUI for Android",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "一个 Aria2 图形界面跨平台客户端 (此为Android版)",
     "repository": {
         "type": "git",
@@ -24,9 +24,9 @@
     "scripts": {
         "build": "babel src/main.js -o www/main.js --source-maps inline",
         "watch": "npm run build -- --watch",
-        "buildApk": "cordova build android",
-        "dev": "cordova run android",
-        "version": "node tools/run_after_bump_the_version.js",
+        "buildApk": "cordova build android && npm run build",
+        "dev": "cordova run android && npm run build",
+        "version": "node tools/run_after_bump_the_version.js && npm run build",
         "bump-version:patch": "npm --no-git-tag-version version patch",
         "bump-version:minor": "npm --no-git-tag-version version minor"
     },
