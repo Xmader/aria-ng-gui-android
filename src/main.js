@@ -93,7 +93,7 @@ const joinPath = (...paths) => {
  * @returns {Promise<boolean>}
  */
 const requestWriteExternalStoragePermission = async () => {
-    
+
     // @ts-ignore
     const permissions = window.cordova.plugins.permissions
     const name = permissions.WRITE_EXTERNAL_STORAGE
@@ -110,6 +110,51 @@ const requestWriteExternalStoragePermission = async () => {
         })
     })
 
+}
+
+/**
+ * 获取文件/目录 Entry
+ * @param {string} path 文件路径
+ * @returns {Promise<Entry>}
+ */
+const getEntry = (path) => {
+    return new Promise((resolve, reject) => {
+        window.resolveLocalFileSystemURL(path, resolve, reject)
+    })
+}
+
+/**
+ * 写入文件
+ * @param {FileEntry} entry 
+ * @param {BlobPart} data 文件内容
+ */
+const writeFileEntry = (entry, data) => {
+    return new Promise((resolve, reject) => {
+        entry.createWriter((fileWriter) => {
+            fileWriter.onwriteend = () => resolve()
+            fileWriter.onerror = reject
+            const blob = new Blob([data])
+            fileWriter.write(blob)
+        })
+    })
+}
+
+/**
+ * 读取文件
+ * @param {FileEntry} entry
+ * @returns {Promise<string>}
+ */
+const readFileEntry = async (entry) => {
+    return new Promise((resolve, reject) => {
+        const errorCallback = reject
+        entry.file((file) => {
+            const reader = new FileReader()
+            reader.onloadend = function () {
+                resolve(this.result)
+            }
+            reader.readAsText(file)
+        }, errorCallback)
+    })
 }
 
 // 等待 Cordova 完全加载
@@ -146,6 +191,30 @@ document.addEventListener("deviceready", async function () {
     // 获取复制到的文件路径
     const copiedAria2FileURL = copiedFileEntry.nativeURL.replace("file://", "")
     const copiedAria2ConfFileURL = copiedAria2FileURL.replace(/\/aria2c$/, "/aria2.conf")
+
+    // 支持保存配置修改到 aria2.conf 配置文件
+    const confFileEntry = await getEntry(copiedAria2ConfFileURL)
+    let conf = ""
+    const saveLocalConfig = async (options) => {
+        if (!conf) {
+            conf = await readFileEntry(confFileEntry)
+        }
+
+        Object.entries(options).forEach(([key, value]) => {
+            const r = new RegExp(`^(?:#\\s*)?(${key}=).*`, "m")
+            if (r.test(conf)) {
+                conf = conf.replace(
+                    r,
+                    "$1" + value
+                )
+            } else {
+                conf += `\n${key}=${value}`
+            }
+        })
+
+        await writeFileEntry(confFileEntry, conf)
+    }
+    window.saveLocalConfig = saveLocalConfig
 
     // 运行aria2c前的准备工作
     // 1. 创建aria2.session会话文件
