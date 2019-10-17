@@ -193,7 +193,7 @@ document.addEventListener("deviceready", async function () {
     const copiedAria2ConfFileURL = copiedAria2FileURL.replace(/\/aria2c$/, "/aria2.conf")
 
     // 支持保存配置修改到 aria2.conf 配置文件
-    const confFileEntry = await getEntry(copiedAria2ConfFileURL)
+    const confFileEntry = await getEntry("file://" + copiedAria2ConfFileURL)
     let conf = ""
     const saveLocalConfig = async (options) => {
         if (!conf) {
