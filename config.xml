@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.xmader.aria_ng_gui_android" version="1.2.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+<widget id="com.xmader.aria_ng_gui_android" version="1.2.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>AriaNgGUI</name>
     <description>
         一个 Aria2 图形界面跨平台客户端 (此为Android版)
