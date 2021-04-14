@@ -1,14 +1,14 @@
 /**
  * AriaNg GUI for Android
  * @author Xmader
- * @copyright Copyright (c) 2018-2019 Xmader. All Rights Reserved.
+ * @copyright Copyright (c) 2018-2021 Xmader. All Rights Reserved.
  * @license MIT
  */
 
 // 输出版权信息
 console.info(`AriaNg GUI for Android
 
-Copyright (c) 2018-2019 Xmader
+Copyright (c) 2018-2021 Xmader
 Released under the MIT license
 
 Source Code: https://github.com/Xmader/aria-ng-gui-android/
