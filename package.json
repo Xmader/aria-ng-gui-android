@@ -17,7 +17,7 @@
         "cordova-plugin-shell-exec": "git+https://github.com/petervojtek/cordova-plugin-shell-exec.git"
     },
     "devDependencies": {
-        "@babel/cli": "^7.6.4",
+        "@babel/cli": "^7.13.14",
         "@babel/core": "^7.6.4",
         "@babel/preset-env": "^7.6.3"
     },
