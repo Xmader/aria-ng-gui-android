@@ -3,11 +3,12 @@
 
 cordova plugin add cordova-plugin-androidx
 cordova plugin add https://github.com/petervojtek/cordova-plugin-shell-exec.git
+cordova plugin add https://bitbucket.org/TheBosZ/cordova-plugin-run-in-background.git
 cordova plugin add cordova-plugin-file
 cordova plugin add cordova-plugin-app-version
 cordova plugin add cordova-plugin-android-permissions
 
-cordova platform add android@9
+cordova platform add android@8
 cordova prepare android
 
 # 将'<script src="cordova.js"></script><script src="js/babel-polyfill.min.js"></script><script src="main.js"></script>'放入index.html中
