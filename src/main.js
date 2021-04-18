@@ -157,6 +157,21 @@ const readFileEntry = async (entry) => {
     })
 }
 
+/**
+ * 后台运行
+ * https://github.com/katzer/cordova-plugin-background-mode
+ */
+const enableBgMode = () => {
+    const cordova = top.cordova
+    cordova.plugins.backgroundMode.enable()
+    cordova.plugins.backgroundMode.overrideBackButton()
+    cordova.plugins.backgroundMode.disableBatteryOptimizations()
+    cordova.plugins.backgroundMode.setDefaults({ hidden: false })
+    cordova.plugins.backgroundMode.on("activate", () => {
+        cordova.plugins.backgroundMode.disableWebViewOptimizations()
+    })
+}
+
 // 等待 Cordova 完全加载
 document.addEventListener("deviceready", async function () {
     const appDir = top.cordova.file.applicationDirectory
@@ -221,6 +236,9 @@ document.addEventListener("deviceready", async function () {
     await shellExecPromise(["touch", downloadDir + "aria2.session"])
     // 2. 让aria2c可执行文件有运行权限
     await shellExecPromise(["chmod", "0777", copiedAria2FileURL])
+
+    // 让程序在后台运行，以及添加运行通知
+    enableBgMode()
 
     // 创建因为端口被占用而运行失败的次数的计数器
     let n = 0
