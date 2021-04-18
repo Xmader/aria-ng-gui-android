@@ -17,6 +17,7 @@
 <!-- * 支持打开下载文件夹, 在文件管理器中显示已下载的文件 (仅限使用内置的Aria2 RPC) (开发中...) -->
 * 使用响应式布局, 支持各种计算机或移动设备
 * 友好的界面交互
+* 支持暗色模式
 
 ## [下载Android版](https://github.com/Xmader/aria-ng-gui-android/releases/latest)
 
@@ -39,6 +40,7 @@
 * Multi aria2 RPC host support
 * Responsive design, supporting desktop and mobile devices
 * User-friendly interface
+* Dark theme support
 
 ## [Download](https://github.com/Xmader/aria-ng-gui-android/releases/latest)
 

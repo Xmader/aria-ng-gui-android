@@ -1,6 +1,7 @@
 
 # cordova create AriaNgGUIAndroid com.xmader.aria_ng_gui_android AriaNgGUI
 
+cordova plugin add cordova-plugin-androidx
 cordova plugin add https://github.com/petervojtek/cordova-plugin-shell-exec.git
 cordova plugin add cordova-plugin-file
 cordova plugin add cordova-plugin-app-version
