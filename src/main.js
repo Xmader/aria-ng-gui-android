@@ -47,7 +47,7 @@ const copyFilePromise = (srcPath, destDir, destFileName = null) => {
         window.resolveLocalFileSystemURL(srcPath, function (fileEntry) {
             window.resolveLocalFileSystemURL(destDir, function (dirEntry) {
                 fileEntry.copyTo(dirEntry, destFileName || fileEntry.name, successCallback, errorCallback)
-            })
+            }, errorCallback)
         }, errorCallback)
     })
 }

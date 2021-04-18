@@ -18,6 +18,7 @@
         <allow-intent href="market:*" />
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
             <application android:usesCleartextTraffic="true" />
+            <application android:debuggable="true" />
         </edit-config>
     </platform>
     <platform name="ios">
